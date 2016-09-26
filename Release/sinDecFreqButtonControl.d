@@ -1,0 +1,1 @@
+sinDecFreqButtonControl.d: ../sinDecFreqButtonControl.c

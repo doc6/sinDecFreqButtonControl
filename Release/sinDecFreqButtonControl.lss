@@ -1,0 +1,107 @@
+
+sinDecFreqButtonControl.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  000000d4  00000148  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000d4  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000011  00000000  00000000  00000148  2**0
+                  CONTENTS, READONLY
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 52 00 	call	0xa4	; 0xa4 <main>
+  78:	0c 94 68 00 	jmp	0xd0	; 0xd0 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <init_ports>:
+  80:	8f ef       	ldi	r24, 0xFF	; 255
+  82:	8a b9       	out	0x0a, r24	; 10
+  84:	1b b8       	out	0x0b, r1	; 11
+  86:	14 b8       	out	0x04, r1	; 4
+  88:	08 95       	ret
+
+0000008a <delay_ms>:
+  8a:	07 c0       	rjmp	.+14     	; 0x9a <delay_ms+0x10>
+  8c:	ef ef       	ldi	r30, 0xFF	; 255
+  8e:	fe e0       	ldi	r31, 0x0E	; 14
+  90:	31 97       	sbiw	r30, 0x01	; 1
+  92:	f1 f7       	brne	.-4      	; 0x90 <delay_ms+0x6>
+  94:	00 c0       	rjmp	.+0      	; 0x96 <delay_ms+0xc>
+  96:	00 00       	nop
+  98:	01 97       	sbiw	r24, 0x01	; 1
+  9a:	00 97       	sbiw	r24, 0x00	; 0
+  9c:	b9 f7       	brne	.-18     	; 0x8c <delay_ms+0x2>
+  9e:	08 95       	ret
+
+000000a0 <write_dac>:
+  a0:	8b b9       	out	0x0b, r24	; 11
+  a2:	08 95       	ret
+
+000000a4 <main>:
+  a4:	0e 94 40 00 	call	0x80	; 0x80 <init_ports>
+  a8:	93 b1       	in	r25, 0x03	; 3
+  aa:	83 b1       	in	r24, 0x03	; 3
+  ac:	8f 71       	andi	r24, 0x1F	; 31
+  ae:	88 0f       	add	r24, r24
+  b0:	88 0f       	add	r24, r24
+  b2:	95 fb       	bst	r25, 5
+  b4:	ee 24       	eor	r14, r14
+  b6:	e0 f8       	bld	r14, 0
+  b8:	f1 2c       	mov	r15, r1
+  ba:	ee 0c       	add	r14, r14
+  bc:	ff 1c       	adc	r15, r15
+  be:	91 e0       	ldi	r25, 0x01	; 1
+  c0:	e9 1a       	sub	r14, r25
+  c2:	f1 08       	sbc	r15, r1
+  c4:	8e 9d       	mul	r24, r14
+  c6:	80 2d       	mov	r24, r0
+  c8:	11 24       	eor	r1, r1
+  ca:	81 58       	subi	r24, 0x81	; 129
+  cc:	8b b9       	out	0x0b, r24	; 11
+  ce:	ec cf       	rjmp	.-40     	; 0xa8 <main+0x4>
+
+000000d0 <_exit>:
+  d0:	f8 94       	cli
+
+000000d2 <__stop_program>:
+  d2:	ff cf       	rjmp	.-2      	; 0xd2 <__stop_program>
